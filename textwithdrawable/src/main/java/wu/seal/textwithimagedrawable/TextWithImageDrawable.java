@@ -387,7 +387,6 @@ public class TextWithImageDrawable extends Element {
     }
 
     public static Color changeParamToColor(int color) {
-        Color hmosColor = new Color(color);
-        return hmosColor;
+        return (new Color(color));
     }
 }
