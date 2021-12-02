@@ -13,6 +13,9 @@ import com.hmos.compat.utils.ResourceUtils;
 
 /**
  * TextWithImageDrawable.
+ * Created By: Seal.Wu
+ * Date: 2016/6/17
+ * Time: 9:56
  */
 public class TextWithImageDrawable extends Element {
 
@@ -32,10 +35,21 @@ public class TextWithImageDrawable extends Element {
         PRE, MID, END
     }
 
+    /**
+     * Ellipsize suffix.
+     */
     private static final String SUFFIX = "…";
     private Context mContext;
     private Element mDrawable;
+
+    /**
+     * Text to display.
+     */
     private String mText;
+
+    /**
+     * Original text.
+     */
     private String originText;
     private int paddingLeft;
     private int paddingRight;
@@ -47,6 +61,10 @@ public class TextWithImageDrawable extends Element {
     private float mTextSize = 50;
     private int mTextHeight;
     private int textTopDelBaseLine;
+
+    /**
+     * Maximum text length.
+     */
     private int maxTextLength = Integer.MAX_VALUE;
 
     /**
@@ -369,6 +387,7 @@ public class TextWithImageDrawable extends Element {
     }
 
     public static Color changeParamToColor(int color) {
-        return (new Color(color));
+        Color hmosColor = new Color(color);
+        return hmosColor;
     }
 }

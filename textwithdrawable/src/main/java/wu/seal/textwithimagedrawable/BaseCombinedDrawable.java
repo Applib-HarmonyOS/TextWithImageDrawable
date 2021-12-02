@@ -3,13 +3,26 @@ package wu.seal.textwithimagedrawable;
 import ohos.agp.components.element.Element;
 
 /**
- * BaseCombinedDrawable.
+ * A drawable composed of two drawables
+ * drawable one It will be drawn first (if the relative offset of the two drawables is 0, the effect is like FrameLayout).
+ * Created By: Seal.Wu
+ * Date: 2016/7/12
+ * Time: 14:36
  */
 public class BaseCombinedDrawable extends Element {
     private Element one;
     private Element two;
+
+    /**
+     * The relative x-axis distance of element two relative to element one.
+     */
     private int relatedX;
+
+    /**
+     * The relative y-axis distance of element two relative to element one.
+     */
     private int relatedY;
+
     private int paddingLeft;
     private int paddingRight;
     private int paddingTop;

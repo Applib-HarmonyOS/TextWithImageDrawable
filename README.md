@@ -1,12 +1,12 @@
 # TextWithImageDrawable
 
-A HMOS library to draw an element with an image and text to a single image (TextWithImageDrawable) or combine two images to a single image (BaseCombinedDrawable)
+A HMOS library which provides TextWithImageDrawable feature
 
 # Source
 Inspired by [wuseal/TextWithImageDrawable](https://github.com/wuseal/TextWithImageDrawable) - version 1.0.4
 
 ## Features
-This library provides options to create an element with image and text combined or combine two images in a single element as shown in screen below
+This library provides features to draw an element with an image and text to a single image (TextWithImageDrawable) or combine two images to a single image (BaseCombinedDrawable)
 
 <img src="Screenshot/Screenshot(3).png" width="500">
 
@@ -31,7 +31,7 @@ This library provides options to create an element with image and text combined 
 
 Following API are provided,
 
-```groovy
+```java
    /**
      * Instantiate an element that contains both text and image 
     */ 
@@ -69,7 +69,7 @@ Following API are provided,
 
 Sample usage
 
-```groovy
+```java
     private String mText = "text";
 
     @Override
@@ -130,6 +130,7 @@ Sample usage
         drawable.setImageRes(ResourceTable.Media_icon);
     }
 ```
+This library draws the image and text directly on the provided canvas, so we cannot use TextWithImageDrawable as an input to BaseCombinedDrawable and width and height of the image should be managed properly
 
 ## BaseCombinedDrawable
 
@@ -138,7 +139,7 @@ The positions of the two images can be flexibly combined, which can basically me
 
 API
 
-```groovy
+```java
     /**
      * Set the relative offset position of the upper left corner of drawable two relative to the upper left corner of
      * drawable one.
@@ -161,7 +162,7 @@ API
 
 Sample code
 
-```groovy
+```java
 	    BaseCombinedDrawable baseCombinedDrawable = new BaseCombinedDrawable(drawableLeft, drawableRight);
         baseCombinedDrawable.setRelatedPosition(drawableLeft.getWidth() + drawablePadding, 0);
         Image combinedImg = (Image) findComponentById(ResourceTable.Id_combinedImage);
@@ -177,4 +178,3 @@ Sample code
 ## Future work
 
 Since there is no alternate api for setColorFilter and getOpacity in HMOS platform, so those functions is currently not supported. 
-This library draws the image and text directly on the provided canvas, so we cannot use TextWithImageDrawable as an input to BaseCombinedDrawable and width and height of the image should be managed properly
