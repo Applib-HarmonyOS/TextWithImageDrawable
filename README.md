@@ -177,4 +177,4 @@ Sample code
 
 ## Future work
 
- Since there are no alternate APIs for setColorFilter and getOpacity in HarmonyOS platform, these functions are currently not supported in this library. Once the platform includes the support, the above API functionality can be integrated in this library."
+ Since there are no alternate APIs for setColorFilter and getOpacity in HarmonyOS platform, these functions are currently not supported in this library. Once the platform includes the support, the above API functionality can be integrated in this library.
