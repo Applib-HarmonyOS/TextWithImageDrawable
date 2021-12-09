@@ -1,180 +1,180 @@
 # TextWithImageDrawable
-An android drawable object which contains text and image
 
-可以同时包含文字和图像的Drawable,也可以单独只包含文字或是图像
+A HMOS library which provides TextWithImageDrawable feature
 
-##使用步骤
-* 在app的构建文件build.gradle中的dependencies中加入下面的代码
+# Source
+Inspired by [wuseal/TextWithImageDrawable](https://github.com/wuseal/TextWithImageDrawable) - version 1.0.4
 
- ```groove
- 
-   compile 'wu.seal:textwithimagedrawable:1.0.4'
- 
- ```
+## Features
+This library provides features to draw an element with an image and text to a single image (TextWithImageDrawable) or combine two images to a single image (BaseCombinedDrawable)
 
-* 然后就可以直接在代码中使用就可以了
+<img src="Screenshot/Screenshot(3).png" width="500">
 
-## Api的简单介绍
-
-```java
-
-            /**
-             * 实例化一个同时包含文字和图片的drawable
-             */
-            TextWithImageDrawable textWithImageDrawable = new TextWithImageDrawable(thisActivity);
-            /**
-             * 设置drawable里的文字
-             */
-            textWithImageDrawable.setText(text);
-            /**
-             * 设置drawable里的图像资源
-             */
-            textWithImageDrawable.setImageRes(leftMenuIconResId);
-             /**
-             * 设置drawable里的图像资源
-             */
-            textWithImageDrawable.setImageBitmap(mBitmap);
-             /**
-             * 设置drawable里的drawable
-             */
-            textWithImageDrawable.setDrawable(mDrawable);
-            /**
-             * 设置drawable中文字的大小,注意此处的单位是sp
-             */
-            textWithImageDrawable.setTextSize(16);
-            /**
-             * 设置文字的颜色
-             */
-            textWithImageDrawable.setTextColor(getResources().getColor(R.color.text_color_white));
-            /**
-             * 设置文字和图像之间的间隔,单位是px
-             */
-            textWithImageDrawable.setImagePadding(DensityUtils.dip2px(5));
-            /**
-             * 设置此drawable的左边填充大小,单位px
-             */
-            textWithImageDrawable.setPaddingLeft(DensityUtils.dip2px(8));
-            /**
-             * 设置此drawable上方填充大小,单位px
-             */
-            textWithImageDrawable.setPaddingTop(DensityUtils.dip2px(6));
-            /**
-             * 设置此drawable的最大文字限制长度
-             */
-            textWithImageDrawable.setMaxTextLength(3);
-            /**
-             * 设置图像和文字的相对位置,此处设置的是图像在文字右边显示
-             */
-            textWithImageDrawable.setImagePosition(TextWithImageDrawable.Position.RIGHT);
-
+## Dependency
+1. For using textwithdrawable module in sample app, include the source code and add the below dependencies in entry/build.gradle to generate hap/support.har.
+```groovy
+    dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
+    implementation project(path: ':textwithdrawable')
+    testImplementation 'junit:junit:4.13'
+    ohosTestImplementation 'com.huawei.ohos.testkit:runner:1.0.0.100'
+    }
 ```
-## 使用示例:
+2. For using textwithdrawable in separate application using har file, add the har file in the entry/libs folder and add the dependencies in entry/build.gradle file.
+```groovy
+    dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.har'])
+    testImplementation 'junit:junit:4.13'
+    }
+```
+## Usage
+
+Following API are provided,
 
 ```java
+   /**
+     * Instantiate an element that contains both text and image 
+    */ 
+   TextWithImageDrawable textWithImageDrawable = new TextWithImageDrawable(this);
+   /**              
+    * Set the text for the element
+	*/ 
+   textWithImageDrawable.setText(text);
+   /**              
+	* Set the Image resource for the element
+	*/ 
+   textWithImageDrawable.setImageRes(ResourceTable.Media_icon);
+   /**
+    * Set the Image pixel map for the element
+    */
+   textWithImageDrawable.setImageBitmap(mBitmap);
+   /**
+    * Set the size for text in the element
+    */
+   textWithImageDrawable.setTextSize(16);
+   /**
+    * Set color for the text in the element
+    */
+   textWithImageDrawable.setTextColor(Color.GREEN.getValue());
+   /**
+    * Set padding for the image in pixels
+    */
+   textWithImageDrawable.setImagePadding(10);
+   /**
+    * Set the left padding for the image in pixels
+    */
+   textWithImageDrawable.setPaddingLeft(10);
 
-    ImageView left, right, top, bottom;
+```	
 
-    String mText = "text";
+Sample usage
+
+```java
+    private String mText = "text";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        /**
-         *  图像资源显示在文字左边的显示效果
-         */
-        left = (ImageView) findViewById(R.id.iv_left);
-        /**
-         *  图像资源显示在文字右边的显示效果
-         */
-        right = (ImageView) findViewById(R.id.iv_right);
-        /**
-         *  图像资源显示在文字上边的显示效果
-         */
-        top = (ImageView) findViewById(R.id.iv_top);
-        /**
-         *  图像资源显示在文字下边的显示效果
-         */
-        bottom = (ImageView) findViewById(R.id.iv_bottom);
+    public void onStart(Intent intent) {
+        super.onStart(intent);
+        super.setUIContent(ResourceTable.Layout_ability_main);
 
-        /**
-         * 图像和文字之间的距离
-         */
-        final int drawablePadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+	    TextWithImageDrawable drawLeft = new TextWithImageDrawable(this);
+        initDrawable(drawablePadding, drawLeft, mText, TextWithImageDrawable.Position.LEFT);
+        Image imgTxtLeft = (Image) findComponentById(ResourceTable.Id_leftImage);
+        imgTxtLeft.addDrawTask(new Component.DrawTask() {
+            @Override
+            public void onDraw(Component component, Canvas canvas) {
+                drawLeft.drawToCanvas(canvas);
+            }
+        });
+        imgTxtLeft.invalidate();
 
-        TextWithImageDrawable drawableLeft = new TextWithImageDrawable(this);
-        initDrawable(drawablePadding, drawableLeft, mText, TextWithImageDrawable.Position.LEFT);
-        left.setImageDrawable(drawableLeft);
+        TextWithImageDrawable drawRight = new TextWithImageDrawable(this);
+        initDrawable(drawablePadding, drawRight, mText, TextWithImageDrawable.Position.RIGHT);
+        Image imgTxtRight = (Image) findComponentById(ResourceTable.Id_rightImage);
+        imgTxtRight.addDrawTask(new Component.DrawTask() {
+            @Override
+            public void onDraw(Component component, Canvas canvas) {
+                drawRight.drawToCanvas(canvas);
+            }
+        });
+        imgTxtRight.invalidate();
 
-        TextWithImageDrawable drawableRight = new TextWithImageDrawable(this);
-        initDrawable(drawablePadding, drawableRight, mText, TextWithImageDrawable.Position.RIGHT);
-        right.setImageDrawable(drawableRight);
+        TextWithImageDrawable drawTop = new TextWithImageDrawable(this);
+        initDrawable(drawablePadding, drawTop, mText, TextWithImageDrawable.Position.TOP);
+        Image imgTxtTop = (Image) findComponentById(ResourceTable.Id_topImage);
+        imgTxtTop.addDrawTask(new Component.DrawTask() {
+            @Override
+            public void onDraw(Component component, Canvas canvas) {
+                drawTop.drawToCanvas(canvas);
+            }
+        });
+        imgTxtTop.invalidate();
 
-        TextWithImageDrawable drawableTop = new TextWithImageDrawable(this);
-        initDrawable(drawablePadding, drawableTop, mText, TextWithImageDrawable.Position.TOP);
-        top.setImageDrawable(drawableTop);
-
-        TextWithImageDrawable drawableBottom = new TextWithImageDrawable(this);
-        initDrawable(drawablePadding, drawableBottom, mText, TextWithImageDrawable.Position.BOTTOM);
-        bottom.setImageDrawable(drawableBottom);
-
-
-
-
+        TextWithImageDrawable drawBottom = new TextWithImageDrawable(this);
+        initDrawable(drawablePadding, drawBottom, mText, TextWithImageDrawable.Position.BOTTOM);
+        Image imgTxtBottom = (Image) findComponentById(ResourceTable.Id_bottomImage);
+        imgTxtBottom.addDrawTask(new Component.DrawTask() {
+            @Override
+            public void onDraw(Component component, Canvas canvas) {
+                drawBottom.drawToCanvas(canvas);
+            }
+        });
+        imgTxtBottom.invalidate();
     }
 
-    private void initDrawable(int drawablePadding, TextWithImageDrawable drawable, String mText, TextWithImageDrawable.Position position) {
-        drawable.setText(mText);
+    private void initDrawable(int drawablePadding, TextWithImageDrawable drawable, String text,
+                              TextWithImageDrawable.Position position) {
+        drawable.setText(text);
         drawable.setImagePosition(position);
         drawable.setImagePadding(drawablePadding);
-        drawable.setImageRes(R.mipmap.ic_launcher);
+        drawable.setImageRes(ResourceTable.Media_icon);
     }
-
 ```
+This library draws the image and text directly on the provided canvas, so we cannot use TextWithImageDrawable as an input to BaseCombinedDrawable and width and height of the image should be managed properly
 
-# BaseCombinedDrawable
-An android drawable object which contains two drawables
+## BaseCombinedDrawable
 
-一个组合drawable,能对两个drawable进行拼凑组合成一个新的drawable,两个drawable的位置可以灵活组合,基本能满足所有的drawable的定制,各种图文混排,你懂的
+A combined drawable can piece together two images and combine them into a new element.
+The positions of the two images can be flexibly combined, which can basically meet the customization of all images, and a variety of graphics .
 
-##Api介绍
+API
 
 ```java
-
-     /**
-     * 设置drawable two 左上角相对于 drawable one左上角 的相对偏移位置
-     * 偏移以drawable one 的左上角为起始点
-     * drawable one 会优先放在最前面进行绘制(如果两个drawable的相对偏移值为0则效果如同FrameLayout)
-     *
-     * @param relatedX x轴的相对偏移
-     * @param relatedY y轴的相对偏移值
-     */
-     public void setRelatedPosition(int relatedX, int relatedY)
-    
-    
     /**
-     * 设置组合后的新的drawable的四个Padding值
+     * Set the relative offset position of the upper left corner of drawable two relative to the upper left corner of
+     * drawable one.
      *
-     * @param paddingLeft   左边填充距离
-     * @param paddingTop    上边填充距离
-     * @param paddingRight  右边填充距离
-     * @param paddingBottom 下边填充距离
+     * @param relatedX relative offset of x-axis
+     * @param relatedY relative offset of y-axis
      */
-     public void setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom)
-    
+	 public void setRelatedPosition( int relatedX, int relatedY)     
+      
+    /**
+     * Method to set padding on four sides.
+     *
+     * @param paddingLeft   Left padding
+     * @param paddingTop    Top padding
+     * @param paddingRight  Right padding
+     * @param paddingBottom Bottom padding
+     */
+	 public void setPadding ( int paddingLeft, int paddingTop, int paddingRight, int paddingBottom)
 ```
 
-##代码示例
+Sample code
 
 ```java
-
-        BaseCombinedDrawable baseCombinedDrawable = new BaseCombinedDrawable(drawableLeft, drawableRight);
-        baseCombinedDrawable.setRelatedPosition(drawableLeft.getIntrinsicWidth() + drawablePadding, 0);
-        combine.setImageDrawable(baseCombinedDrawable);
-
+	    BaseCombinedDrawable baseCombinedDrawable = new BaseCombinedDrawable(drawableLeft, drawableRight);
+        baseCombinedDrawable.setRelatedPosition(drawableLeft.getWidth() + drawablePadding, 0);
+        Image combinedImg = (Image) findComponentById(ResourceTable.Id_combinedImage);
+        combinedImg.addDrawTask(new Component.DrawTask() {
+            @Override
+            public void onDraw(Component component, Canvas canvas) {
+                baseCombinedDrawable.drawToCanvas(canvas);
+            }
+        });
+        combinedImg.invalidate();
 ```
 
+## Future work
 
-##效果图:
-<img src="https://github.com/wuseal/TextWithImageDrawable/blob/master/demo.png?raw=true" alt="alt text" >
- 
+ Since there are no alternate APIs for setColorFilter and getOpacity in HarmonyOS platform, these functions are currently not supported in this library. Once the platform includes the support, the above API functionality can be integrated in this library.
