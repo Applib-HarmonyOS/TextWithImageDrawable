@@ -1,4 +1,4 @@
-[![.github/workflows/main.yml](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml/badge.svg)](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml)  
+[![.github/workflows/main.yml](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml/badge.svg)](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml)  [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=applibgroup_TextWithImageDrawable&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=applibgroup_TextWithImageDrawable)
 
 # TextWithImageDrawable
 
