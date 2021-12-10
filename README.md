@@ -1,3 +1,5 @@
+[![.github/workflows/main.yml](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml/badge.svg)](https://github.com/applibgroup/TextWithImageDrawable/actions/workflows/main.yml)  
+
 # TextWithImageDrawable
 
 A HMOS library which provides TextWithImageDrawable feature
